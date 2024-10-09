@@ -30,11 +30,16 @@ class GildedRoseTest(unittest.TestCase):
 
         gr.update_quality()
 
-        assert gr.get_items_by_name(brie) == [
+        expected_items = [
             Item(brie, 1, 1),
             Item(brie, 0, 11),
             Item(brie, 4, 50)
         ]
+        for expected, actual in zip(expected_items, gr.items):
+            self.assertEqual(expected.name, actual.name)
+            self.assertEqual(expected.sell_in, actual.sell_in)
+            self.assertEqual(expected.quality, actual.quality)
+
 #2. The Quality of an item is never more than 50
     def test_quality_never_more_than_50(self):
         brie = "Aged Brie"
@@ -56,10 +61,14 @@ class GildedRoseTest(unittest.TestCase):
 
         gr.update_quality()
 
-        assert gr.get_items_by_name(sulfuras) == [
-            Item(sulfuras, 0, 80),  # No changes
-            Item(sulfuras, -1, 80)  # No changes
+        expected_items = [
+            Item(sulfuras, 0, 80),
+            Item(sulfuras, -1, 80)
         ]
+        for expected, actual in zip(expected_items, gr.items):
+            self.assertEqual(expected.name, actual.name)
+            self.assertEqual(expected.sell_in, actual.sell_in)
+            self.assertEqual(expected.quality, actual.quality)
 
 if __name__ == '__main__':
     unittest.main()
